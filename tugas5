@@ -1,0 +1,105 @@
+import java.util.Scanner;
+
+public class NilaiMahasiswa {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Masukkan jumlah data: ");
+        int jumlahData = scanner.nextInt();
+
+        String[] nama = new String[jumlahData];
+        int[] nilai = new int[jumlahData];
+        int totalNilai = 0;
+
+        for (int i = 0; i < jumlahData; i++) {
+            System.out.println("________________________________");
+            System.out.println("Mahasiswa Ke : " + (i + 1));
+            System.out.print("Nama: ");
+            nama[i] = scanner.next();
+            System.out.print("Nilai: ");
+            nilai[i] = scanner.nextInt();
+            totalNilai += nilai[i];
+        }
+
+        System.out.println("DAFTAR NILAI MAHASISWA");
+        System.out.println("================================");
+        System.out.println("No\tNama\tNilai\tStatus");
+
+        for (int i = 0; i < jumlahData; i++) {
+            System.out.printf("%d\t%s\t%d\t%s\n", i + 1, nama[i], nilai[i], nilai[i] >= 75 ? "Lulus" : "Tidak Lulus");
+        }
+
+        System.out.println("================================");
+        System.out.println("Jumlah: " + totalNilai);
+        System.out.printf("Nilai Rata-rata: %.1f\n", (double) totalNilai / jumlahData);
+    }
+}
+
+
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Buah {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Data buah dalam bentuk ArrayList
+        List<List<String>> buah = new ArrayList<>();
+        buah.add(List.of("apel", "35000"));
+        buah.add(List.of("jeruk", "50000"));
+        buah.add(List.of("mangga", "25000"));
+        buah.add(List.of("duku", "15000"));
+        buah.add(List.of("semangka", "20000"));
+
+        // List untuk menyimpan buah yang dibeli
+        List<List<String>> belanja = new ArrayList<>();
+
+        int pilihan;
+        do {
+            System.out.println("Menu:");
+            System.out.println("1. Beli Buah");
+            System.out.println("2. Struk Belanja");
+            System.out.println("3. Keluar");
+            System.out.print("Masukkan pilihan: ");
+            pilihan = scanner.nextInt();
+
+            switch (pilihan) {
+                case 1:
+                    System.out.println("Pilih Buah (0-" + (buah.size() - 1) + "): ");
+                    int indexBuah = scanner.nextInt();
+                    System.out.print("Masukkan jumlah: ");
+                    int jumlah = scanner.nextInt();
+                    belanja.add(List.of(buah.get(indexBuah).get(0), String.valueOf(jumlah), buah.get(indexBuah).get(1)));
+
+                    System.out.print("Input lagi? (y/n): ");
+                    String lagi = scanner.next();
+                    if (!lagi.equalsIgnoreCase("y")) {
+                        break;
+                    }
+                    break;
+                case 2:
+                    int total = 0;
+                    System.out.println("Daftar Belanja:");
+                    System.out.println("========================================");
+                    System.out.println("No.\tNama Buah\tJumlah\tHarga\tSubtotal");
+                    for (int i = 0; i < belanja.size(); i++) {
+                        int hargaSatuan = Integer.parseInt(belanja.get(i).get(2));
+                        int jumlahBeli = Integer.parseInt(belanja.get(i).get(1));
+                        int subtotal = hargaSatuan * jumlahBeli;
+                        System.out.printf("%d.\t%s\t%d\t%d\t%d\n", i + 1, belanja.get(i).get(0), jumlahBeli, hargaSatuan, subtotal);
+                        total += subtotal;
+                    }
+                    System.out.println("========================================");
+                    System.out.println("Total: " + total);
+                    int diskon = (int) (total * 0.15);
+                    System.out.println("Discount(15%): " + diskon);
+                    System.out.println("Total bayar: " + (total - diskon));
+                    break;
+            }
+        } while (pilihan != 3);
+    }
+}
